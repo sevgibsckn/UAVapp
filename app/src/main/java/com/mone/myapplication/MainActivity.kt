@@ -1,81 +1,55 @@
 package com.mone.myapplication
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import androidx.activity.enableEdgeToEdge
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.mone.myapplication.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-
-    private val sahteSoket=sahteSoket()
-    private val handler=Handler(Looper.getMainLooper())
-    private val updateInterval=1000L
-    private var isUpdating=true
-
-    private val updateTask=object:Runnable{
-        override fun run() {
-
-            val veri = sahteSoket.randomTelemetriDegistir()
-
-
-
-            binding.textView.text="Batarya: ${veri.batarya}"
-            binding.textView2.text="Rakım:${veri.rakim}"
-            binding.textView3.text="GPS: %.6f, %.6f".format(veri.gpsX, veri.gpsY)
-            binding.textView4.text="Uçuş Süresi: ${veri.sure}"
-
-            handler.postDelayed(this,updateInterval)
-
-
-        }
-
-    }
-
+    private var webSocketManager: WebSocketManager? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         binding = ActivityMainBinding.inflate(layoutInflater)
-        val view = binding.root
-        setContentView(view)
+        setContentView(binding.root)
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
+        // WebSocket sunucusunu başlat
+        webSocketManager = WebSocketManager(this)
 
+        // Start WebSocket connection
         binding.button.setOnClickListener {
-            if (!isUpdating) {
-                handler.post(updateTask)
-                isUpdating = true
-                binding.button.isEnabled = false
-                binding.button2.isEnabled = true
-            }
+            webSocketManager?.startWebSocket()  // WebSocket bağlantısını başlat
+            binding.button.isEnabled = false
+            binding.button2.isEnabled = true
+            showToast("WebSocket Bağlantısı Başlatıldı")
         }
 
+        // Stop WebSocket connection
         binding.button2.setOnClickListener {
-            if (isUpdating) {
-                handler.removeCallbacks(updateTask)
-                isUpdating = false
-                binding.button.isEnabled = true
-                binding.button2.isEnabled = false
-            }
-
+            webSocketManager?.stopWebSocket()  // WebSocket bağlantısını durdur
             binding.button.isEnabled = true
             binding.button2.isEnabled = false
-
-
+            showToast("WebSocket Bağlantısı Durduruldu")
         }
+    }
 
+    // Gelen veriyi UI üzerinde güncelle
+    fun updateUI(telemetriData: telemetriVeri) {
+        binding.textView.text = "Batarya: ${telemetriData.batarya}%"
+        binding.textView2.text = "Rakım: ${telemetriData.rakim} m"
+        binding.textView3.text = "GPS: %.6f, %.6f".format(telemetriData.gpsX, telemetriData.gpsY)
+        binding.textView4.text = "Uçuş Süresi: ${telemetriData.sure} sn"
+    }
 
+    // Toast mesajı göster
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        webSocketManager?.stopWebSocket()  // Aktivite yok olduğunda WebSocket'i durdur
     }
 }
