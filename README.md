@@ -1,10 +1,11 @@
-# Android UAV Telemetry Uygulaması
+
+#  Android UAV Telemetry Uygulaması
 
 Bu Android uygulaması, insansız hava aracı (UAV) telemetri verilerinin bir yer kontrol istasyonu üzerinden izlenmesini simüle eder. Gerçek cihaz bağlantısı yerine sahte (mock) bir veri akışıyla çalışır. Uygulama, gelen verileri işler ve kullanıcı arayüzünde canlı olarak gösterir.
 
 ---
 
-## Uygulama Özellikleri
+##  Uygulama Özellikleri
 
 - Gerçek zamanlı telemetri verisi alma (sahte WebSocket üzerinden)
 - JSON veri çözümleme (parse)
@@ -14,28 +15,36 @@ Bu Android uygulaması, insansız hava aracı (UAV) telemetri verilerinin bir ye
 - Sade ve işlevsel kullanıcı arayüzü
 
 ---
-## Kurulum ve Çalıştırma
+
+##  Kurulum ve Çalıştırma
 
 1. **Projeyi GitHub'dan klonlayın veya indirin:**
 
 2. **Android Studio ile açın.**
    - Minimum SDK olarak **API 26 (Android 8.0)** seçili olmalıdır.
 
-3. **Emülatörü başlatın.**
+3. **Emülatörü başlatın** veya fiziksel cihaz bağlayın.
 
 4. **WebSocket sunucusunu başlatın:**
    - Uygulama, `ws://10.0.2.2:8080` adresinden veri alır.
    - Bu adres Android emülatörü için bilgisayarınızın localhost'unu temsil eder.
-     
-   **WebSocket sunucusu:
 
---- server.js adında aşağıdaki kodları içeren dosya oluşturun 
-  
-  const WebSocket = require('ws');
+---
 
-  const wss = new WebSocket.Server({ port: 8080 });
+##  Sahte Veri Sunucusu (Node.js ile)
 
-  wss.on('connection', ws => {
+Telemetri verileri, WebSocket bağlantısıyla sahte olarak gönderilir. Bunun için basit bir Node.js sunucusu yeterlidir.
+
+### Node.js Sunucusu Kurulumu
+
+1. Aşağıdaki gibi bir dosya oluşturun: `server.js`
+
+```javascript
+const WebSocket = require('ws');
+
+const wss = new WebSocket.Server({ port: 8080 });
+
+wss.on('connection', ws => {
   console.log('Yeni bir istemci bağlandı.');
 
   setInterval(() => {
@@ -53,18 +62,35 @@ Bu Android uygulaması, insansız hava aracı (UAV) telemetri verilerinin bir ye
   }, 3000); //3000 ms -> 3 second
 });
 
- console.log('WebSocket server çalışıyor, 8080 portu üzerinde ayakta...');
+console.log('WebSocket server çalışıyor, 8080 portu üzerinde ayakta...');
 
---- WebSocket sunucusunu başlatın.
-    npm install ws
-    node server.js
+```
 
-## Kullanılan Teknolojiler
-- **Android (Kotlin)**: Uygulama dili ve platformu
+2. Terminalde şu komutları çalıştırarak sunucuyu başlatın:
+
+```bash
+npm install ws
+node server.js
+```
+
+---
+
+##  Kullanılan Teknolojiler
+
+- **Android (Kotlin)**: Uygulama dili ve platformu kullanıldı.
 - **WebSocket (OkHttp)**: Sahte veri akışını almak için kullanıldı.
 - **Gson**: Gelen JSON verilerini Kotlin veri sınıfına dönüştürmek için kullanıldı.
 - **ViewBinding**: UI bileşenlerine güvenli erişim için kullanıldı.
 - **ConstraintLayout & CardView**: Modern ve okunabilir kullanıcı arayüzü tasarımı için kullanıldı.
+
+---
+
+
+
+
+
+
+
 
 
 
