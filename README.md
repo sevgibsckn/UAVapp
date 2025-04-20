@@ -1,5 +1,5 @@
 
-#  Android UAV Telemetry Uygulaması
+#  Android UAV Telemetry App
 
 Bu Android uygulaması, insansız hava aracı (UAV) telemetri verilerinin bir yer kontrol istasyonu üzerinden izlenmesini simüle eder. Gerçek cihaz bağlantısı yerine sahte (mock) bir veri akışıyla çalışır. Uygulama, gelen verileri işler ve kullanıcı arayüzünde canlı olarak gösterir.
 
