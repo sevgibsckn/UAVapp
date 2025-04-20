@@ -29,7 +29,7 @@ Bu Android uygulaması, insansız hava aracı (UAV) telemetri verilerinin bir ye
      
    **WebSocket sunucusu:
 
- 4.1. server.js adında aşağıdaki kodları içeren dosya oluşturun 
+--- server.js adında aşağıdaki kodları içeren dosya oluşturun 
   
   const WebSocket = require('ws');
 
@@ -55,12 +55,12 @@ Bu Android uygulaması, insansız hava aracı (UAV) telemetri verilerinin bir ye
 
  console.log('WebSocket server çalışıyor, 8080 portu üzerinde ayakta...');
 
- 4.2 WebSocket sunucusunu başlatın.
+--- WebSocket sunucusunu başlatın.
     npm install ws
     node server.js
 
 ## Kullanılan Teknolojiler
-    - **Android (Kotlin)**: Uygulama dili ve platformu
+- **Android (Kotlin)**: Uygulama dili ve platformu
 - **WebSocket (OkHttp)**: Sahte veri akışını almak için kullanıldı.
 - **Gson**: Gelen JSON verilerini Kotlin veri sınıfına dönüştürmek için kullanıldı.
 - **ViewBinding**: UI bileşenlerine güvenli erişim için kullanıldı.
