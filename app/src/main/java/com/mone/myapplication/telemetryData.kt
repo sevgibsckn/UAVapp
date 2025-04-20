@@ -1,6 +1,6 @@
 package com.mone.myapplication
 
-data class telemetriVeri(
+data class telemetryData(
     val batarya:Float,
     val rakim:Int,
     val gpsX: Double,

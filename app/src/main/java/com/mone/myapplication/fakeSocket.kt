@@ -1,12 +1,12 @@
 package com.mone.myapplication
 
-class sahteSoket {
+class fakeSocket {
 
     private var ilkVoltaj=16.5f
     private var ilkRakim =120
     private var ilkUcus=0
 
-    fun randomTelemetriDegistir():telemetriVeri{
+    fun randomTelemetriDegistir():telemetryData{
 
         ilkVoltaj-=0.01f
         ilkRakim+=(0..9).random()
@@ -18,7 +18,7 @@ class sahteSoket {
 
 
 
-        return telemetriVeri(ilkVoltaj,ilkRakim,String.format("%.6f", gpsX).toDouble(),String.format("%.6f", gpsY).toDouble(),ucusSure)
+        return telemetryData(ilkVoltaj,ilkRakim,String.format("%.6f", gpsX).toDouble(),String.format("%.6f", gpsY).toDouble(),ucusSure)
 
     }
 

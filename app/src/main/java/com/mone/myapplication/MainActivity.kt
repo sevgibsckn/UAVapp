@@ -19,28 +19,28 @@ class MainActivity : AppCompatActivity() {
         webSocketManager = WebSocketManager(this)
 
         // Start WebSocket connection
-        binding.button.setOnClickListener {
+        binding.buttonStart.setOnClickListener {
             webSocketManager?.startWebSocket()  // WebSocket bağlantısını başlat
-            binding.button.isEnabled = false
-            binding.button2.isEnabled = true
+            binding.buttonStart.isEnabled = false
+            binding.buttonStop.isEnabled = true
             showToast("WebSocket Bağlantısı Başlatıldı")
         }
 
         // Stop WebSocket connection
-        binding.button2.setOnClickListener {
+        binding.buttonStop.setOnClickListener {
             webSocketManager?.stopWebSocket()  // WebSocket bağlantısını durdur
-            binding.button.isEnabled = true
-            binding.button2.isEnabled = false
+            binding.buttonStart.isEnabled = true
+            binding.buttonStop.isEnabled = false
             showToast("WebSocket Bağlantısı Durduruldu")
         }
     }
 
     // Gelen veriyi UI üzerinde güncelle
-    fun updateUI(telemetriData: telemetriVeri) {
-        binding.textView.text = "Batarya: ${telemetriData.batarya}%"
-        binding.textView2.text = "Rakım: ${telemetriData.rakim} m"
-        binding.textView3.text = "GPS: %.6f, %.6f".format(telemetriData.gpsX, telemetriData.gpsY)
-        binding.textView4.text = "Uçuş Süresi: ${telemetriData.sure} sn"
+    fun updateUI(telemetriData: telemetryData) {
+        binding.txtBattery.text = "Batarya: ${telemetriData.batarya}%"
+        binding.txtAltitude.text = "Rakım: ${telemetriData.rakim} m"
+        binding.txtGPS.text = "GPS: %.6f, %.6f".format(telemetriData.gpsX, telemetriData.gpsY)
+        binding.txtTime.text = "Uçuş Süresi: ${telemetriData.sure} sn"
     }
 
     // Toast mesajı göster

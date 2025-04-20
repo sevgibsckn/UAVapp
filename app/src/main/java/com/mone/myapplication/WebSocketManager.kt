@@ -7,6 +7,7 @@ import okhttp3.Request
 import okhttp3.WebSocket
 import okhttp3.WebSocketListener
 import okio.ByteString
+
 class WebSocketManager(private val activity: MainActivity) {
 
     private var webSocket: WebSocket? = null
@@ -58,8 +59,8 @@ class WebSocketManager(private val activity: MainActivity) {
     }
 
     // JSON string verisini telemetriVeri nesnesine dönüştürme
-    private fun parseTelemetriData(jsonString: String): telemetriVeri {
+    private fun parseTelemetriData(jsonString: String): telemetryData {
         val gson = Gson()
-        return gson.fromJson(jsonString, telemetriVeri::class.java)
+        return gson.fromJson(jsonString, telemetryData::class.java)
     }
 }
