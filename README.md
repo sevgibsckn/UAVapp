@@ -78,7 +78,7 @@ node server.js
 ##  Kullanılan Teknolojiler
 
 - **Android (Kotlin)**: Uygulama dili ve platformu kullanıldı.
-- **WebSocket (OkHttp)**: Sahte veri akışını almak için kullanıldı.
+- **Node.js (WebSocket,OkHttp)**: Sahte veri akışını almak için kullanıldı.
 - **Gson**: Gelen JSON verilerini Kotlin veri sınıfına dönüştürmek için kullanıldı.
 - **ViewBinding**: UI bileşenlerine güvenli erişim için kullanıldı.
 - **ConstraintLayout & CardView**: Modern ve okunabilir kullanıcı arayüzü tasarımı için kullanıldı.
