@@ -1,10 +1,10 @@
-# 🛰️ Android UAV Telemetry Uygulaması
+# Android UAV Telemetry Uygulaması
 
 Bu Android uygulaması, insansız hava aracı (UAV) telemetri verilerinin bir yer kontrol istasyonu üzerinden izlenmesini simüle eder. Gerçek cihaz bağlantısı yerine sahte (mock) bir veri akışıyla çalışır. Uygulama, gelen verileri işler ve kullanıcı arayüzünde canlı olarak gösterir.
 
 ---
 
-## 📋 Uygulama Özellikleri
+## Uygulama Özellikleri
 
 - Gerçek zamanlı telemetri verisi alma (sahte WebSocket üzerinden)
 - JSON veri çözümleme (parse)
@@ -14,20 +14,57 @@ Bu Android uygulaması, insansız hava aracı (UAV) telemetri verilerinin bir ye
 - Sade ve işlevsel kullanıcı arayüzü
 
 ---
-## 🔧 Kurulum ve Çalıştırma
+## Kurulum ve Çalıştırma
 
 1. **Projeyi GitHub'dan klonlayın veya indirin:**
-
-```bash
-git clone https://github.com/kullaniciadi/uav-telemetry-app.git
-```
 
 2. **Android Studio ile açın.**
    - Minimum SDK olarak **API 26 (Android 8.0)** seçili olmalıdır.
 
-3. **Emülatörü başlatın** veya fiziksel cihaz bağlayın.
+3. **Emülatörü başlatın.**
 
 4. **WebSocket sunucusunu başlatın:**
    - Uygulama, `ws://10.0.2.2:8080` adresinden veri alır.
    - Bu adres Android emülatörü için bilgisayarınızın localhost'unu temsil eder.
+     
+   **WebSocket sunucusu:
+
+ 4.1. server.js adında aşağıdaki kodları içeren dosya oluşturun 
+  
+  const WebSocket = require('ws');
+
+  const wss = new WebSocket.Server({ port: 8080 });
+
+  wss.on('connection', ws => {
+  console.log('Yeni bir istemci bağlandı.');
+
+  setInterval(() => {
+    const telemetryData = {
+      batarya: (Math.random() * 100).toFixed(2),
+      rakim: Math.floor(Math.random() * 5000), 
+      gpsX: (Math.random() * 180 - 90).toFixed(6), 
+      gpsY: (Math.random() * 360 - 180).toFixed(6), 
+      sure: Math.floor(Math.random() * 100).toString() 
+    };
+
+    ws.send(JSON.stringify(telemetryData));
+    console.log('WebSocket veri gönderildi (örn batarya): ',telemetryData.batarya);
+
+  }, 3000); //3000 ms -> 3 second
+});
+
+ console.log('WebSocket server çalışıyor, 8080 portu üzerinde ayakta...');
+
+ 4.2 WebSocket sunucusunu başlatın.
+    npm install ws
+    node server.js
+
+## Kullanılan Teknolojiler
+    - **Android (Kotlin)**: Uygulama dili ve platformu
+- **WebSocket (OkHttp)**: Sahte veri akışını almak için kullanıldı.
+- **Gson**: Gelen JSON verilerini Kotlin veri sınıfına dönüştürmek için kullanıldı.
+- **ViewBinding**: UI bileşenlerine güvenli erişim için kullanıldı.
+- **ConstraintLayout & CardView**: Modern ve okunabilir kullanıcı arayüzü tasarımı için kullanıldı.
+
+
 
