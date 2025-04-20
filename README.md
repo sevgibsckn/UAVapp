@@ -33,7 +33,7 @@ Bu Android uygulaması, insansız hava aracı (UAV) telemetri verilerinin bir ye
 
 ##  Sahte Veri Sunucusu (Node.js ile)
 
-Telemetri verileri, WebSocket bağlantısıyla sahte olarak gönderilir. Bunun için basit bir Node.js sunucusu yeterlidir.
+Telemetri verileri, WebSocket bağlantısıyla sahte olarak gönderilir. Bunun için basit bir Node.js sunucusu oluşturacağız.
 
 ### Node.js Sunucusu Kurulumu
 
